@@ -15,16 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - uses: yegor256/latexmk-action@0.11.1
       with:
-        cmd: latexmk
         path: src
         opts: -pdf
+        packages: biblatex
 
     - name: Upload PDF as Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: compiled-pdf
         path: src/main.pdf
