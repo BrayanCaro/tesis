@@ -19,9 +19,9 @@ jobs:
 
     - uses: yegor256/latexmk-action@0.11.1
       with:
-        cmd: latexmk
         path: src
         opts: -pdf
+        packages: biblatex
 
     - name: Upload PDF as Artifact
       uses: actions/upload-artifact@v2
