@@ -1,0 +1,31 @@
+name: Build LaTeX Document
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: yegor256/latexmk-action@0.11.1
+      with:
+        cmd: latexmk
+        path: src
+        opts: -pdf
+
+    - name: Upload PDF as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: compiled-pdf
+        path: src/main.pdf
+
