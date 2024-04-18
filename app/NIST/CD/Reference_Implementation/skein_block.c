@@ -53,6 +53,7 @@ void Skein_256_Process_Block(Skein_256_Ctxt_t *ctx,const u08b_t *blkPtr,size_t b
 
         /* precompute the key schedule for this block */
         ks[WCNT] = SKEIN_KS_PARITY;
+        //@ loop unroll 4;
         for (i=0;i < WCNT; i++)
             {
             ks[i]     = ctx->X[i];
@@ -297,7 +298,7 @@ void Skein1024_Process_Block(Skein1024_Ctxt_t *ctx,const u08b_t *blkPtr,size_t b
             X[14] += X[13]; X[13] = RotL_64(X[13],R1024_2_5); X[13] ^= X[14];
             X[ 8] += X[11]; X[11] = RotL_64(X[11],R1024_2_6); X[11] ^= X[ 8];
             X[10] += X[ 9]; X[ 9] = RotL_64(X[ 9],R1024_2_7); X[ 9] ^= X[10];    Skein_Show_Round(BLK_BITS,&ctx->h,8*r-5,X);
-                                                                            
+
             X[ 0] += X[15]; X[15] = RotL_64(X[15],R1024_3_0); X[15] ^= X[ 0];
             X[ 2] += X[11]; X[11] = RotL_64(X[11],R1024_3_1); X[11] ^= X[ 2];
             X[ 6] += X[13]; X[13] = RotL_64(X[13],R1024_3_2); X[13] ^= X[ 6];
@@ -334,7 +335,7 @@ void Skein1024_Process_Block(Skein1024_Ctxt_t *ctx,const u08b_t *blkPtr,size_t b
             X[14] += X[13]; X[13] = RotL_64(X[13],R1024_6_5); X[13] ^= X[14];
             X[ 8] += X[11]; X[11] = RotL_64(X[11],R1024_6_6); X[11] ^= X[ 8];
             X[10] += X[ 9]; X[ 9] = RotL_64(X[ 9],R1024_6_7); X[ 9] ^= X[10];    Skein_Show_Round(BLK_BITS,&ctx->h,8*r-1,X);
-                                                                            
+
             X[ 0] += X[15]; X[15] = RotL_64(X[15],R1024_7_0); X[15] ^= X[ 0];
             X[ 2] += X[11]; X[11] = RotL_64(X[11],R1024_7_1); X[11] ^= X[ 2];
             X[ 6] += X[13]; X[13] = RotL_64(X[13],R1024_7_2); X[13] ^= X[ 6];
@@ -349,7 +350,7 @@ void Skein1024_Process_Block(Skein1024_Ctxt_t *ctx,const u08b_t *blkPtr,size_t b
         for (i=0;i<WCNT;i++)
             ctx->X[i] = X[i] ^ w[i];
         Skein_Show_Round(BLK_BITS,&ctx->h,SKEIN_RND_FEED_FWD,ctx->X);
-        
+
 		Skein_Clear_First_Flag(ctx->h);		/* clear the start bit */
         blkPtr += SKEIN1024_BLOCK_BYTES;
         }
