@@ -7,7 +7,7 @@ int main(void)
     u08b_t hash[HASHLEN];
     int i;
     Skein_256_Ctxt_t skein_context;
-    Skein_256_Init( &skein_context, HASHLEN);
+    Skein_256_Init( &skein_context, HASHLEN * 8);
     Skein_256_Update( &skein_context, msg, 80);
     Skein_256_Final( &skein_context, hash);
     for (i=0; i<HASHLEN; i++)
